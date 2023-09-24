@@ -53,6 +53,25 @@ app.get('/api/leden', (req, res) =>  {
     });
 });
 
+app.get('/api/leden/afdelingId/:afdelingId', (req, res) =>  {
+  const afdId = req.params.afdelingId;
+
+  if (!afdId) {
+    return res.status(400).send('Missing required parameter: afdelingId');
+  }
+
+  const query = 'SELECT * FROM leden WHERE afdelingId = ?';
+
+  db.query(query, [afdId], (err, results) => {
+    if (err) {
+      console.error('ERROR querying database: ' + err.stack);
+      res.status(500).send('Error Querying Database');
+      return;
+    }
+    res.json(results);
+  });
+});
+
 
 // Start the server
 app.listen(port, () => {
