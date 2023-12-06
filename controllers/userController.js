@@ -1,7 +1,10 @@
 const db = require('../database'); // Import your database connection
 
+// GET Requests
+// GET Requests
+// GET Requests
 
-// Get all users
+// GET ALL
 exports.getAllUsers = (req, res) => {
   db.query('SELECT * FROM users', (err, results) => {
     if (err) {
@@ -12,8 +15,7 @@ exports.getAllUsers = (req, res) => {
     res.json(results);
   });
 };
-
-// Get User by username
+// GET by USERNAME
 exports.getUserByUserName = (req, res) => {
   const userName = req.params.userName;
 
@@ -32,6 +34,42 @@ exports.getUserByUserName = (req, res) => {
     res.json(results);
   });
 };
+// GET by ID
+exports.getUserById = (req, res) => {
+  const userId = req.params.userId;
+
+  if(!userId) {
+    return res.status(400).send('Missed required parameter: userId');
+  }
+
+  const query = 'SELECT * FROM users WHERE id = ?';
+  db.query(query, [userName], (err, results) => {
+    if(err) {
+      console.err('ERROR querying database: ' + err.stack);
+      res.status(500).send('Error Querying Databse');
+      return;
+    } 
+    res.json(results);
+  })
+}
+// GET by LidId
+exports.getUserByLidId = (req, res) => {
+  const LidId = req.params.LidId;
+
+  if(!LidId) {
+    return res.status(400).send('Missed required parameter: LidId');
+  }
+
+  const query = 'SELECT * FROM users WHERE LidId = ?';
+  db.query(query, [userName], (err, results) => {
+    if(err) {
+      console.err('ERROR querying database: ' + err.stack);
+      res.status(500).send('Error Querying Databse');
+      return;
+    } 
+    res.json(results);
+  })
+}
 
 // Add a new user
 exports.createUser = (req, res) => {
@@ -94,3 +132,5 @@ exports.deleteUser = (req, res) => {
     res.json({ message: 'User deleted successfully' });
   });
 };
+
+// 

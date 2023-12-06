@@ -14,15 +14,18 @@ exports.getAllLeden = (req, res) => {
 
 // Count All Leden
 exports.countAllLeden = (req, res) => {
-  db.query('SELECT COUNT(*) AS count FROM leden', (err, results) => {
+  console.log("Entered countAllLeden Controll function")
+  db.query('SELECT COUNT(*) AS countLeden FROM leden', (err, results) => {
     if (err) {
-      console.error('Error querying database: ' + err.stack);
-      res.status(500).send('Error querying database');
-      return;
-    }
-    res.json(results);
+          console.error('Error querying database: ' + err.stack);
+          res.status(500).send('Error querying database');
+          return;
+      }
+      res.json(results);
   });
 };
+// Count Leden Per Afdeling
+// ADD
 
 // Get Leden by afdeling ID
 exports.getLedenByAfdelingId = (req, res) => {
