@@ -14,6 +14,9 @@ router.get('/users/:id', userController.getUserById);
 // GET user by LidId
 router.get('/users/:LidId', userController.getUserByLidId);
 
+// Get user by permission
+router.get('/users/:permissions', userController.getUserByPermissions);
+
 // ADD a new user
 router.post('/users/addUser', userController.createUser);
 
@@ -22,5 +25,7 @@ router.put('/users/:userId', userController.updateUser);
 
 // DELETE a user
 router.delete('/users/:userId', userController.deleteUser);
+
+
 
 module.exports = router;

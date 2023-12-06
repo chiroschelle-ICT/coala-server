@@ -43,7 +43,7 @@ exports.getUserById = (req, res) => {
   }
 
   const query = 'SELECT * FROM users WHERE id = ?';
-  db.query(query, [userName], (err, results) => {
+  db.query(query, [userId], (err, results) => {
     if(err) {
       console.err('ERROR querying database: ' + err.stack);
       res.status(500).send('Error Querying Databse');
@@ -61,7 +61,7 @@ exports.getUserByLidId = (req, res) => {
   }
 
   const query = 'SELECT * FROM users WHERE LidId = ?';
-  db.query(query, [userName], (err, results) => {
+  db.query(query, [LidId], (err, results) => {
     if(err) {
       console.err('ERROR querying database: ' + err.stack);
       res.status(500).send('Error Querying Databse');
@@ -70,7 +70,24 @@ exports.getUserByLidId = (req, res) => {
     res.json(results);
   })
 }
+// GET by permissions
+exports.getUserByPermissions = (req, res) => {
+  const permissions = req.params.permissions;
 
+  if(!permissions) {
+    return res.status(400).send('Missed required parameter: permissions');
+  }
+
+  const query = 'SELECT * FROM users WHERE permissions = ?';
+  db.query(query, [permissions], (err, results) => {
+    if(err) {
+      console.err('ERROR querying database: ' + err.stack);
+      res.status(500).send('Error Querying Databse');
+      return;
+    } 
+    res.json(results);
+  })
+}
 // Add a new user
 exports.createUser = (req, res) => {
   // Extract user data from the request body
